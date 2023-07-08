@@ -1,13 +1,6 @@
 # 开发记录
 
-## 生成前端
-```shell
-# 生成前端代码
-ignite s vue -y
-# 生成  vue  相关代码
-ignite generate composables
-ignite generate vuex -y
-```
+
 
 
 ## 构建消息
@@ -26,6 +19,16 @@ cometdidd query did list-orgs
 ```
 
 
+
+
+## 生成前端
+```shell
+# 生成前端代码
+ignite s vue -y
+# 生成  vue  相关代码
+ignite generate composables
+ignite generate vuex -y
+```
 
 
 

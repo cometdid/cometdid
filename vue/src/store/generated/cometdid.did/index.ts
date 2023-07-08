@@ -192,20 +192,6 @@ export default {
 		},
 		
 		
-		async sendMsgDeleteOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
-				const result = await client.CometdidDid.tx.sendMsgDeleteOrgs({ value, fee: fullFee, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgDeleteOrgs:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgDeleteOrgs:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgCreateOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -234,20 +220,21 @@ export default {
 				}
 			}
 		},
-		
-		async MsgDeleteOrgs({ rootGetters }, { value }) {
+		async sendMsgDeleteOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
-				const client=initClient(rootGetters)
-				const msg = await client.CometdidDid.tx.msgDeleteOrgs({value})
-				return msg
+				const client=await initClient(rootGetters)
+				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
+				const result = await client.CometdidDid.tx.sendMsgDeleteOrgs({ value, fee: fullFee, memo })
+				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
 					throw new Error('TxClient:MsgDeleteOrgs:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgDeleteOrgs:Create Could not create message: ' + e.message)
+				}else{
+					throw new Error('TxClient:MsgDeleteOrgs:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
+		
 		async MsgCreateOrgs({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -271,6 +258,19 @@ export default {
 					throw new Error('TxClient:MsgUpdateOrgs:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgUpdateOrgs:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgDeleteOrgs({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CometdidDid.tx.msgDeleteOrgs({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgDeleteOrgs:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgDeleteOrgs:Create Could not create message: ' + e.message)
 				}
 			}
 		},
