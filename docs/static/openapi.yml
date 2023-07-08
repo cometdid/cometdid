@@ -46670,6 +46670,9 @@ definitions:
     type: object
   cometdid.did.MsgOauthResponse:
     type: object
+    properties:
+      did:
+        type: string
   cometdid.did.MsgUpdateOrgsResponse:
     type: object
   cometdid.did.Orgs:

@@ -11,13 +11,13 @@ service Msg {
   rpc CreateOrgs (MsgCreateOrgs) returns (MsgCreateOrgsResponse);
   rpc UpdateOrgs (MsgUpdateOrgs) returns (MsgUpdateOrgsResponse);
   rpc DeleteOrgs (MsgDeleteOrgs) returns (MsgDeleteOrgsResponse);
-  rpc Oauth      (MsgOauth     ) returns (MsgOauthResponse     );
+  rpc Oauth      (MsgOauth) returns (MsgOauthResponse);
 }
 message MsgCreateOrgs {
   string creator = 1;
-  string name    = 2;
-  string logo    = 3;
-  string desc    = 4;
+  string name = 2;
+  string logo = 3;
+  string desc = 4;
 }
 
 message MsgCreateOrgsResponse {
@@ -26,25 +26,29 @@ message MsgCreateOrgsResponse {
 
 message MsgUpdateOrgs {
   string creator = 1;
-  uint64 id      = 2;
-  string name    = 3;
-  string logo    = 4;
-  string desc    = 5;
+  uint64 id = 2;
+  string name = 3;
+  string logo = 4;
+  string desc = 5;
 }
 
 message MsgUpdateOrgsResponse {}
 
 message MsgDeleteOrgs {
   string creator = 1;
-  uint64 id      = 2;
+  uint64 id = 2;
 }
 
 message MsgDeleteOrgsResponse {}
 
 message MsgOauth {
   string creator = 1;
-  uint64 orgId   = 2;
+  uint64 orgId = 2;
+  string name = 3;
+  string avatar = 4;
 }
 
-message MsgOauthResponse {}
+message MsgOauthResponse {
+  string did=1;
+}
 

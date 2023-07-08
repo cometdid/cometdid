@@ -15,9 +15,9 @@ var _ = strconv.Itoa(0)
 
 func CmdOauth() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "oauth [org-id]",
+		Use:   "oauth [org-id] [name] [avatar]",
 		Short: "Broadcast message oauth",
-		Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			argOrgId, err := cast.ToUint64E(args[0])
 			if err != nil {
@@ -32,6 +32,8 @@ func CmdOauth() *cobra.Command {
 			msg := types.NewMsgOauth(
 				clientCtx.GetFromAddress().String(),
 				argOrgId,
+				args[1],
+				args[2],
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err

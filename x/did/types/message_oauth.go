@@ -9,10 +9,12 @@ const TypeMsgOauth = "oauth"
 
 var _ sdk.Msg = &MsgOauth{}
 
-func NewMsgOauth(creator string, orgId uint64) *MsgOauth {
+func NewMsgOauth(creator string, orgId uint64, name, avatar string) *MsgOauth {
 	return &MsgOauth{
 		Creator: creator,
 		OrgId:   orgId,
+		Name:    "",
+		Avatar:  "",
 	}
 }
 

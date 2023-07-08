@@ -3,7 +3,6 @@ package keeper
 import (
 	"encoding/binary"
 	"encoding/hex"
-	"fmt"
 	"github.com/ockam-network/did"
 
 	"cometdid/x/did/types"
@@ -147,10 +146,10 @@ func GetOrgsIDFromBytes(bz []byte) uint64 {
 }
 
 // UserAuth build user did
-func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) {
+func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) string {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsAuthKey))
-	store = prefix.NewStore(store, GetOrgsIDBytes(orgId))
-
+	accAddress, _ := sdk.AccAddressFromBech32(creator)
+	store = prefix.NewStore(store, append([]byte(accAddress)[:], '/'))
 	id := did.DID{
 		Method:       types.DidMethod,
 		ID:           "",
@@ -159,6 +158,6 @@ func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) {
 		PathSegments: nil,
 		Fragment:     "",
 	}
-	k.Logger(ctx).Error("did", "dissdfasdf", id.String())
-	fmt.Println(id.String())
+	store.Set(GetOrgsIDBytes(orgId), []byte(id.String()))
+	return id.String()
 }

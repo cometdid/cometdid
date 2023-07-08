@@ -26,7 +26,7 @@ cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y
 cometdidd query did list-orgs
 
 ## 授权生成 did 
-cometdidd tx did oauth 1 --from bob -y
+cometdidd tx did oauth 1 test avator.png --from bob -y
 ```
 
 

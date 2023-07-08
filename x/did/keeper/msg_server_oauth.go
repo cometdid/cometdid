@@ -21,7 +21,9 @@ func (k msgServer) Oauth(goCtx context.Context, msg *types.MsgOauth) (*types.Msg
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.OrgId))
 	}
 
-	k.UserAuth(ctx, msg.OrgId, msg.Creator)
+	id := k.UserAuth(ctx, msg.OrgId, msg.Creator)
 
-	return &types.MsgOauthResponse{}, nil
+	return &types.MsgOauthResponse{
+		Did: id,
+	}, nil
 }

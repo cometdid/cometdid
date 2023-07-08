@@ -28,6 +28,9 @@ client:
     path: docs/static/openapi.yml
 genesis:
   chain_id: did_0708
+  app_state:
+    did:
+      orgsCount: 1
 validators:
 - name: alice
   bonded: 100000000stake
