@@ -16,6 +16,8 @@ cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y
 ## 显示列表
 cometdidd query did list-orgs
 
+## 授权生成 did 
+
 ```
 
 

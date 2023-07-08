@@ -35,6 +35,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeleteOrgs int = 100
 
+	opWeightMsgOauth = "op_weight_msg_oauth"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgOauth int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -107,6 +111,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		didsimulation.SimulateMsgDeleteOrgs(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgOauth int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgOauth, &weightMsgOauth, nil,
+		func(_ *rand.Rand) {
+			weightMsgOauth = defaultWeightMsgOauth
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgOauth,
+		didsimulation.SimulateMsgOauth(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -136,6 +151,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgDeleteOrgs,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				didsimulation.SimulateMsgDeleteOrgs(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgOauth,
+			defaultWeightMsgOauth,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				didsimulation.SimulateMsgOauth(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

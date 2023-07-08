@@ -11,6 +11,7 @@ service Msg {
   rpc CreateOrgs (MsgCreateOrgs) returns (MsgCreateOrgsResponse);
   rpc UpdateOrgs (MsgUpdateOrgs) returns (MsgUpdateOrgsResponse);
   rpc DeleteOrgs (MsgDeleteOrgs) returns (MsgDeleteOrgsResponse);
+  rpc Oauth      (MsgOauth     ) returns (MsgOauthResponse     );
 }
 message MsgCreateOrgs {
   string creator = 1;
@@ -39,4 +40,11 @@ message MsgDeleteOrgs {
 }
 
 message MsgDeleteOrgsResponse {}
+
+message MsgOauth {
+  string creator = 1;
+  uint64 orgId   = 2;
+}
+
+message MsgOauthResponse {}
 

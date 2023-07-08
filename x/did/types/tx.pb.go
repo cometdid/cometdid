@@ -339,6 +339,94 @@ func (m *MsgDeleteOrgsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgDeleteOrgsResponse proto.InternalMessageInfo
 
+type MsgOauth struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	OrgId   uint64 `protobuf:"varint,2,opt,name=orgId,proto3" json:"orgId,omitempty"`
+}
+
+func (m *MsgOauth) Reset()         { *m = MsgOauth{} }
+func (m *MsgOauth) String() string { return proto.CompactTextString(m) }
+func (*MsgOauth) ProtoMessage()    {}
+func (*MsgOauth) Descriptor() ([]byte, []int) {
+	return fileDescriptor_be02d962922f9604, []int{6}
+}
+func (m *MsgOauth) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgOauth) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgOauth.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgOauth) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgOauth.Merge(m, src)
+}
+func (m *MsgOauth) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgOauth) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgOauth.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgOauth proto.InternalMessageInfo
+
+func (m *MsgOauth) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgOauth) GetOrgId() uint64 {
+	if m != nil {
+		return m.OrgId
+	}
+	return 0
+}
+
+type MsgOauthResponse struct {
+}
+
+func (m *MsgOauthResponse) Reset()         { *m = MsgOauthResponse{} }
+func (m *MsgOauthResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgOauthResponse) ProtoMessage()    {}
+func (*MsgOauthResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_be02d962922f9604, []int{7}
+}
+func (m *MsgOauthResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgOauthResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgOauthResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgOauthResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgOauthResponse.Merge(m, src)
+}
+func (m *MsgOauthResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgOauthResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgOauthResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgOauthResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgCreateOrgs)(nil), "cometdid.did.MsgCreateOrgs")
 	proto.RegisterType((*MsgCreateOrgsResponse)(nil), "cometdid.did.MsgCreateOrgsResponse")
@@ -346,32 +434,37 @@ func init() {
 	proto.RegisterType((*MsgUpdateOrgsResponse)(nil), "cometdid.did.MsgUpdateOrgsResponse")
 	proto.RegisterType((*MsgDeleteOrgs)(nil), "cometdid.did.MsgDeleteOrgs")
 	proto.RegisterType((*MsgDeleteOrgsResponse)(nil), "cometdid.did.MsgDeleteOrgsResponse")
+	proto.RegisterType((*MsgOauth)(nil), "cometdid.did.MsgOauth")
+	proto.RegisterType((*MsgOauthResponse)(nil), "cometdid.did.MsgOauthResponse")
 }
 
 func init() { proto.RegisterFile("cometdid/did/tx.proto", fileDescriptor_be02d962922f9604) }
 
 var fileDescriptor_be02d962922f9604 = []byte{
-	// 315 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x4d, 0xce, 0xcf, 0x4d,
-	0x2d, 0x49, 0xc9, 0x4c, 0xd1, 0x07, 0xe1, 0x92, 0x0a, 0xbd, 0x82, 0xa2, 0xfc, 0x92, 0x7c, 0x21,
-	0x1e, 0x98, 0xb0, 0x5e, 0x4a, 0x66, 0x8a, 0x94, 0x38, 0x8a, 0xa2, 0xfc, 0xa2, 0xf4, 0x62, 0x88,
-	0x32, 0xa5, 0x54, 0x2e, 0x5e, 0xdf, 0xe2, 0x74, 0xe7, 0xa2, 0xd4, 0xc4, 0x92, 0x54, 0xff, 0xa2,
-	0xf4, 0x62, 0x21, 0x09, 0x2e, 0xf6, 0x64, 0x10, 0x2f, 0xbf, 0x48, 0x82, 0x51, 0x81, 0x51, 0x83,
-	0x33, 0x08, 0xc6, 0x15, 0x12, 0xe2, 0x62, 0xc9, 0x4b, 0xcc, 0x4d, 0x95, 0x60, 0x02, 0x0b, 0x83,
-	0xd9, 0x20, 0xb1, 0x9c, 0xfc, 0xf4, 0x7c, 0x09, 0x66, 0x88, 0x18, 0x88, 0x0d, 0x12, 0x4b, 0x49,
-	0x2d, 0x4e, 0x96, 0x60, 0x81, 0x88, 0x81, 0xd8, 0x4a, 0xea, 0x5c, 0xa2, 0x28, 0xd6, 0x04, 0xa5,
-	0x16, 0x17, 0xe4, 0xe7, 0x15, 0xa7, 0x0a, 0xf1, 0x71, 0x31, 0x65, 0xa6, 0x80, 0x6d, 0x62, 0x09,
-	0x62, 0xca, 0x4c, 0x51, 0x2a, 0x05, 0xbb, 0x27, 0xb4, 0x20, 0x85, 0xb0, 0x7b, 0x20, 0x5a, 0x99,
-	0x60, 0x5a, 0xe1, 0xee, 0x63, 0xc6, 0xe2, 0x3e, 0x16, 0x2c, 0xee, 0x63, 0x45, 0x72, 0x9f, 0x38,
-	0xd8, 0x7d, 0x08, 0x6b, 0x61, 0xee, 0x53, 0xb2, 0x04, 0xbb, 0xc7, 0x25, 0x35, 0x27, 0x95, 0x54,
-	0xf7, 0x40, 0xcd, 0x44, 0x68, 0x85, 0x99, 0x69, 0xf4, 0x95, 0x91, 0x8b, 0xd9, 0xb7, 0x38, 0x5d,
-	0xc8, 0x8f, 0x8b, 0x0b, 0x29, 0xe0, 0xa5, 0xf5, 0x90, 0x63, 0x4c, 0x0f, 0x25, 0xb8, 0xa4, 0x94,
-	0xf1, 0x48, 0xc2, 0xc3, 0xd2, 0x8f, 0x8b, 0x0b, 0x29, 0xe0, 0x30, 0xcd, 0x43, 0x48, 0x62, 0x31,
-	0x0f, 0xd3, 0xef, 0x20, 0xf3, 0x90, 0x3c, 0x8e, 0x69, 0x1e, 0x42, 0x12, 0x8b, 0x79, 0x98, 0xfe,
-	0x76, 0xd2, 0x3b, 0xf1, 0x48, 0x8e, 0xf1, 0xc2, 0x23, 0x39, 0xc6, 0x07, 0x8f, 0xe4, 0x18, 0x27,
-	0x3c, 0x96, 0x63, 0xb8, 0xf0, 0x58, 0x8e, 0xe1, 0xc6, 0x63, 0x39, 0x86, 0x28, 0x11, 0x78, 0xf2,
-	0xac, 0x80, 0xa4, 0xe2, 0xca, 0x82, 0xd4, 0xe2, 0x24, 0x36, 0x70, 0x12, 0x35, 0x06, 0x04, 0x00,
-	0x00, 0xff, 0xff, 0x02, 0x4a, 0xbf, 0x19, 0xe2, 0x02, 0x00, 0x00,
+	// 363 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcd, 0x4a, 0xc3, 0x40,
+	0x10, 0xc7, 0x9b, 0x34, 0xf5, 0x63, 0x50, 0x91, 0xa5, 0xb5, 0xa1, 0xc2, 0x22, 0xf1, 0xa0, 0xa7,
+	0x08, 0x7a, 0xd2, 0x8b, 0xa0, 0x5e, 0x3c, 0xb4, 0x85, 0x82, 0x17, 0x6f, 0xb5, 0xbb, 0xac, 0x81,
+	0xb6, 0x1b, 0x76, 0x53, 0xa8, 0x6f, 0xe1, 0xd3, 0xf8, 0x0c, 0x1e, 0x7b, 0xf4, 0x28, 0xcd, 0x8b,
+	0xc8, 0xee, 0xba, 0xf9, 0x20, 0xa1, 0xe2, 0x21, 0xb0, 0xfb, 0xdf, 0x99, 0xdf, 0xfc, 0x99, 0xc9,
+	0x40, 0x67, 0xc2, 0x67, 0x34, 0x21, 0x11, 0xb9, 0x50, 0x5f, 0xb2, 0x0c, 0x63, 0xc1, 0x13, 0x8e,
+	0xf6, 0xac, 0x1c, 0x92, 0x88, 0xf4, 0xba, 0xa5, 0x20, 0x2e, 0x98, 0x34, 0x61, 0x01, 0x85, 0xfd,
+	0xbe, 0x64, 0xf7, 0x82, 0x8e, 0x13, 0x3a, 0x14, 0x4c, 0x22, 0x1f, 0xb6, 0x27, 0xea, 0xc6, 0x85,
+	0xef, 0x9c, 0x38, 0xe7, 0xbb, 0x23, 0x7b, 0x45, 0x08, 0xbc, 0xf9, 0x78, 0x46, 0x7d, 0x57, 0xcb,
+	0xfa, 0xac, 0xb4, 0x29, 0x67, 0xdc, 0x6f, 0x1a, 0x4d, 0x9d, 0x95, 0x46, 0xa8, 0x9c, 0xf8, 0x9e,
+	0xd1, 0xd4, 0x39, 0x38, 0x83, 0x4e, 0xa9, 0xcc, 0x88, 0xca, 0x98, 0xcf, 0x25, 0x45, 0x07, 0xe0,
+	0x46, 0x44, 0x57, 0xf2, 0x46, 0x6e, 0x44, 0x82, 0x85, 0xf6, 0xf3, 0x14, 0x93, 0xbf, 0xfd, 0x98,
+	0x54, 0xd7, 0xa6, 0x66, 0xfe, 0x9a, 0x35, 0xfe, 0xbc, 0x1a, 0x7f, 0xad, 0x82, 0xbf, 0xae, 0xf6,
+	0x97, 0x97, 0xb5, 0xfe, 0x82, 0x6b, 0xed, 0xe7, 0x81, 0x4e, 0xe9, 0x7f, 0xfd, 0xfc, 0x32, 0xf3,
+	0xd4, 0x8c, 0x79, 0x03, 0x3b, 0x7d, 0xc9, 0x86, 0xe3, 0x45, 0xf2, 0xba, 0x01, 0xd7, 0x86, 0x16,
+	0x17, 0xec, 0xd1, 0x12, 0xcd, 0x25, 0x40, 0x70, 0x68, 0x73, 0x2d, 0xef, 0xf2, 0xc3, 0x85, 0x66,
+	0x5f, 0x32, 0x34, 0x00, 0x28, 0x0c, 0xf2, 0x38, 0x2c, 0xfe, 0x01, 0x61, 0xa9, 0xfd, 0xbd, 0xd3,
+	0x0d, 0x8f, 0xd9, 0x6c, 0x06, 0x00, 0x85, 0x41, 0x54, 0x79, 0xf9, 0x63, 0x0d, 0xaf, 0xda, 0x4b,
+	0xc5, 0x2b, 0x34, 0xb2, 0xca, 0xcb, 0x1f, 0x6b, 0x78, 0xd5, 0x3e, 0xa2, 0x5b, 0x68, 0x99, 0x26,
+	0x1e, 0x55, 0xa2, 0xb5, 0xde, 0xc3, 0xf5, 0xba, 0x05, 0xdc, 0x85, 0x9f, 0x6b, 0xec, 0xac, 0xd6,
+	0xd8, 0xf9, 0x5e, 0x63, 0xe7, 0x3d, 0xc5, 0x8d, 0x55, 0x8a, 0x1b, 0x5f, 0x29, 0x6e, 0x3c, 0xb7,
+	0xb3, 0x7d, 0x59, 0x9a, 0xb5, 0x7a, 0x8b, 0xa9, 0x7c, 0xd9, 0xd2, 0x3b, 0x73, 0xf5, 0x13, 0x00,
+	0x00, 0xff, 0xff, 0x98, 0x32, 0x54, 0x10, 0x73, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -389,6 +482,7 @@ type MsgClient interface {
 	CreateOrgs(ctx context.Context, in *MsgCreateOrgs, opts ...grpc.CallOption) (*MsgCreateOrgsResponse, error)
 	UpdateOrgs(ctx context.Context, in *MsgUpdateOrgs, opts ...grpc.CallOption) (*MsgUpdateOrgsResponse, error)
 	DeleteOrgs(ctx context.Context, in *MsgDeleteOrgs, opts ...grpc.CallOption) (*MsgDeleteOrgsResponse, error)
+	Oauth(ctx context.Context, in *MsgOauth, opts ...grpc.CallOption) (*MsgOauthResponse, error)
 }
 
 type msgClient struct {
@@ -426,11 +520,21 @@ func (c *msgClient) DeleteOrgs(ctx context.Context, in *MsgDeleteOrgs, opts ...g
 	return out, nil
 }
 
+func (c *msgClient) Oauth(ctx context.Context, in *MsgOauth, opts ...grpc.CallOption) (*MsgOauthResponse, error) {
+	out := new(MsgOauthResponse)
+	err := c.cc.Invoke(ctx, "/cometdid.did.Msg/Oauth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	CreateOrgs(context.Context, *MsgCreateOrgs) (*MsgCreateOrgsResponse, error)
 	UpdateOrgs(context.Context, *MsgUpdateOrgs) (*MsgUpdateOrgsResponse, error)
 	DeleteOrgs(context.Context, *MsgDeleteOrgs) (*MsgDeleteOrgsResponse, error)
+	Oauth(context.Context, *MsgOauth) (*MsgOauthResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -445,6 +549,9 @@ func (*UnimplementedMsgServer) UpdateOrgs(ctx context.Context, req *MsgUpdateOrg
 }
 func (*UnimplementedMsgServer) DeleteOrgs(ctx context.Context, req *MsgDeleteOrgs) (*MsgDeleteOrgsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOrgs not implemented")
+}
+func (*UnimplementedMsgServer) Oauth(ctx context.Context, req *MsgOauth) (*MsgOauthResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Oauth not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -505,6 +612,24 @@ func _Msg_DeleteOrgs_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_Oauth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgOauth)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).Oauth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cometdid.did.Msg/Oauth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).Oauth(ctx, req.(*MsgOauth))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "cometdid.did.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -520,6 +645,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteOrgs",
 			Handler:    _Msg_DeleteOrgs_Handler,
+		},
+		{
+			MethodName: "Oauth",
+			Handler:    _Msg_Oauth_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -742,6 +871,64 @@ func (m *MsgDeleteOrgsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgOauth) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgOauth) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgOauth) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.OrgId != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.OrgId))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgOauthResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgOauthResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgOauthResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -844,6 +1031,31 @@ func (m *MsgDeleteOrgs) Size() (n int) {
 }
 
 func (m *MsgDeleteOrgsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgOauth) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.OrgId != 0 {
+		n += 1 + sovTx(uint64(m.OrgId))
+	}
+	return n
+}
+
+func (m *MsgOauthResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1480,6 +1692,157 @@ func (m *MsgDeleteOrgsResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgDeleteOrgsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgOauth) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgOauth: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgOauth: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OrgId", wireType)
+			}
+			m.OrgId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.OrgId |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgOauthResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgOauthResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgOauthResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

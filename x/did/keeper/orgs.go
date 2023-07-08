@@ -2,6 +2,9 @@ package keeper
 
 import (
 	"encoding/binary"
+	"encoding/hex"
+	"fmt"
+	"github.com/ockam-network/did"
 
 	"cometdid/x/did/types"
 	"github.com/cosmos/cosmos-sdk/store/prefix"
@@ -141,4 +144,21 @@ func GetOrgsIDBytes(id uint64) []byte {
 // GetOrgsIDFromBytes returns ID in uint64 format from a byte array
 func GetOrgsIDFromBytes(bz []byte) uint64 {
 	return binary.BigEndian.Uint64(bz)
+}
+
+// UserAuth build user did
+func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsAuthKey))
+	store = prefix.NewStore(store, GetOrgsIDBytes(orgId))
+
+	id := did.DID{
+		Method:       "cometdid",
+		ID:           creator,
+		IDStrings:    []string{hex.EncodeToString(GetOrgsIDBytes(orgId))},
+		Path:         "",
+		PathSegments: nil,
+		Fragment:     "",
+	}
+	k.Logger(ctx).Error("did", "dissdfasdf", id.String())
+	fmt.Println(id.String())
 }

@@ -206,20 +206,6 @@ export default {
 				}
 			}
 		},
-		async sendMsgUpdateOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
-			try {
-				const client=await initClient(rootGetters)
-				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
-				const result = await client.CometdidDid.tx.sendMsgUpdateOrgs({ value, fee: fullFee, memo })
-				return result
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateOrgs:Init Could not initialize signing client. Wallet is required.')
-				}else{
-					throw new Error('TxClient:MsgUpdateOrgs:Send Could not broadcast Tx: '+ e.message)
-				}
-			}
-		},
 		async sendMsgDeleteOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
@@ -231,6 +217,34 @@ export default {
 					throw new Error('TxClient:MsgDeleteOrgs:Init Could not initialize signing client. Wallet is required.')
 				}else{
 					throw new Error('TxClient:MsgDeleteOrgs:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgOauth({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
+				const result = await client.CometdidDid.tx.sendMsgOauth({ value, fee: fullFee, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgOauth:Send Could not broadcast Tx: '+ e.message)
+				}
+			}
+		},
+		async sendMsgUpdateOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
+			try {
+				const client=await initClient(rootGetters)
+				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
+				const result = await client.CometdidDid.tx.sendMsgUpdateOrgs({ value, fee: fullFee, memo })
+				return result
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateOrgs:Init Could not initialize signing client. Wallet is required.')
+				}else{
+					throw new Error('TxClient:MsgUpdateOrgs:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -248,19 +262,6 @@ export default {
 				}
 			}
 		},
-		async MsgUpdateOrgs({ rootGetters }, { value }) {
-			try {
-				const client=initClient(rootGetters)
-				const msg = await client.CometdidDid.tx.msgUpdateOrgs({value})
-				return msg
-			} catch (e) {
-				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgUpdateOrgs:Init Could not initialize signing client. Wallet is required.')
-				} else{
-					throw new Error('TxClient:MsgUpdateOrgs:Create Could not create message: ' + e.message)
-				}
-			}
-		},
 		async MsgDeleteOrgs({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
@@ -271,6 +272,32 @@ export default {
 					throw new Error('TxClient:MsgDeleteOrgs:Init Could not initialize signing client. Wallet is required.')
 				} else{
 					throw new Error('TxClient:MsgDeleteOrgs:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgOauth({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CometdidDid.tx.msgOauth({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgOauth:Create Could not create message: ' + e.message)
+				}
+			}
+		},
+		async MsgUpdateOrgs({ rootGetters }, { value }) {
+			try {
+				const client=initClient(rootGetters)
+				const msg = await client.CometdidDid.tx.msgUpdateOrgs({value})
+				return msg
+			} catch (e) {
+				if (e == MissingWalletError) {
+					throw new Error('TxClient:MsgUpdateOrgs:Init Could not initialize signing client. Wallet is required.')
+				} else{
+					throw new Error('TxClient:MsgUpdateOrgs:Create Could not create message: ' + e.message)
 				}
 			}
 		},

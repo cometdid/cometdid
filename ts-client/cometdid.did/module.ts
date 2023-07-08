@@ -8,22 +8,17 @@ import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
 import { MsgCreateOrgs } from "./types/cometdid/did/tx";
-import { MsgUpdateOrgs } from "./types/cometdid/did/tx";
 import { MsgDeleteOrgs } from "./types/cometdid/did/tx";
+import { MsgOauth } from "./types/cometdid/did/tx";
+import { MsgUpdateOrgs } from "./types/cometdid/did/tx";
 
 import { Orgs as typeOrgs} from "./types"
 import { Params as typeParams} from "./types"
 
-export { MsgCreateOrgs, MsgUpdateOrgs, MsgDeleteOrgs };
+export { MsgCreateOrgs, MsgDeleteOrgs, MsgOauth, MsgUpdateOrgs };
 
 type sendMsgCreateOrgsParams = {
   value: MsgCreateOrgs,
-  fee?: StdFee,
-  memo?: string
-};
-
-type sendMsgUpdateOrgsParams = {
-  value: MsgUpdateOrgs,
   fee?: StdFee,
   memo?: string
 };
@@ -34,17 +29,33 @@ type sendMsgDeleteOrgsParams = {
   memo?: string
 };
 
+type sendMsgOauthParams = {
+  value: MsgOauth,
+  fee?: StdFee,
+  memo?: string
+};
+
+type sendMsgUpdateOrgsParams = {
+  value: MsgUpdateOrgs,
+  fee?: StdFee,
+  memo?: string
+};
+
 
 type msgCreateOrgsParams = {
   value: MsgCreateOrgs,
 };
 
-type msgUpdateOrgsParams = {
-  value: MsgUpdateOrgs,
-};
-
 type msgDeleteOrgsParams = {
   value: MsgDeleteOrgs,
+};
+
+type msgOauthParams = {
+  value: MsgOauth,
+};
+
+type msgUpdateOrgsParams = {
+  value: MsgUpdateOrgs,
 };
 
 
@@ -91,20 +102,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgUpdateOrgs({ value, fee, memo }: sendMsgUpdateOrgsParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgUpdateOrgs: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgUpdateOrgs({ value: MsgUpdateOrgs.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgUpdateOrgs: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
 		async sendMsgDeleteOrgs({ value, fee, memo }: sendMsgDeleteOrgsParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgDeleteOrgs: Unable to sign Tx. Signer is not present.')
@@ -119,6 +116,34 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		async sendMsgOauth({ value, fee, memo }: sendMsgOauthParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgOauth: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgOauth({ value: MsgOauth.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgOauth: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgUpdateOrgs({ value, fee, memo }: sendMsgUpdateOrgsParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgUpdateOrgs: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgUpdateOrgs({ value: MsgUpdateOrgs.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgUpdateOrgs: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
 		
 		msgCreateOrgs({ value }: msgCreateOrgsParams): EncodeObject {
 			try {
@@ -128,19 +153,27 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgUpdateOrgs({ value }: msgUpdateOrgsParams): EncodeObject {
-			try {
-				return { typeUrl: "/cometdid.did.MsgUpdateOrgs", value: MsgUpdateOrgs.fromPartial( value ) }  
-			} catch (e: any) {
-				throw new Error('TxClient:MsgUpdateOrgs: Could not create message: ' + e.message)
-			}
-		},
-		
 		msgDeleteOrgs({ value }: msgDeleteOrgsParams): EncodeObject {
 			try {
 				return { typeUrl: "/cometdid.did.MsgDeleteOrgs", value: MsgDeleteOrgs.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgDeleteOrgs: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgOauth({ value }: msgOauthParams): EncodeObject {
+			try {
+				return { typeUrl: "/cometdid.did.MsgOauth", value: MsgOauth.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgOauth: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgUpdateOrgs({ value }: msgUpdateOrgsParams): EncodeObject {
+			try {
+				return { typeUrl: "/cometdid.did.MsgUpdateOrgs", value: MsgUpdateOrgs.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgUpdateOrgs: Could not create message: ' + e.message)
 			}
 		},
 		

@@ -46668,6 +46668,8 @@ definitions:
         format: uint64
   cometdid.did.MsgDeleteOrgsResponse:
     type: object
+  cometdid.did.MsgOauthResponse:
+    type: object
   cometdid.did.MsgUpdateOrgsResponse:
     type: object
   cometdid.did.Orgs:

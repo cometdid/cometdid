@@ -34,6 +34,14 @@ export interface MsgDeleteOrgs {
 export interface MsgDeleteOrgsResponse {
 }
 
+export interface MsgOauth {
+  creator: string;
+  orgId: number;
+}
+
+export interface MsgOauthResponse {
+}
+
 function createBaseMsgCreateOrgs(): MsgCreateOrgs {
   return { creator: "", name: "", logo: "", desc: "" };
 }
@@ -378,11 +386,109 @@ export const MsgDeleteOrgsResponse = {
   },
 };
 
+function createBaseMsgOauth(): MsgOauth {
+  return { creator: "", orgId: 0 };
+}
+
+export const MsgOauth = {
+  encode(message: MsgOauth, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.orgId !== 0) {
+      writer.uint32(16).uint64(message.orgId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgOauth {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgOauth();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.orgId = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgOauth {
+    return {
+      creator: isSet(object.creator) ? String(object.creator) : "",
+      orgId: isSet(object.orgId) ? Number(object.orgId) : 0,
+    };
+  },
+
+  toJSON(message: MsgOauth): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.orgId !== undefined && (obj.orgId = Math.round(message.orgId));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgOauth>, I>>(object: I): MsgOauth {
+    const message = createBaseMsgOauth();
+    message.creator = object.creator ?? "";
+    message.orgId = object.orgId ?? 0;
+    return message;
+  },
+};
+
+function createBaseMsgOauthResponse(): MsgOauthResponse {
+  return {};
+}
+
+export const MsgOauthResponse = {
+  encode(_: MsgOauthResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgOauthResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgOauthResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgOauthResponse {
+    return {};
+  },
+
+  toJSON(_: MsgOauthResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgOauthResponse>, I>>(_: I): MsgOauthResponse {
+    const message = createBaseMsgOauthResponse();
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateOrgs(request: MsgCreateOrgs): Promise<MsgCreateOrgsResponse>;
   UpdateOrgs(request: MsgUpdateOrgs): Promise<MsgUpdateOrgsResponse>;
   DeleteOrgs(request: MsgDeleteOrgs): Promise<MsgDeleteOrgsResponse>;
+  Oauth(request: MsgOauth): Promise<MsgOauthResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -392,6 +498,7 @@ export class MsgClientImpl implements Msg {
     this.CreateOrgs = this.CreateOrgs.bind(this);
     this.UpdateOrgs = this.UpdateOrgs.bind(this);
     this.DeleteOrgs = this.DeleteOrgs.bind(this);
+    this.Oauth = this.Oauth.bind(this);
   }
   CreateOrgs(request: MsgCreateOrgs): Promise<MsgCreateOrgsResponse> {
     const data = MsgCreateOrgs.encode(request).finish();
@@ -409,6 +516,12 @@ export class MsgClientImpl implements Msg {
     const data = MsgDeleteOrgs.encode(request).finish();
     const promise = this.rpc.request("cometdid.did.Msg", "DeleteOrgs", data);
     return promise.then((data) => MsgDeleteOrgsResponse.decode(new _m0.Reader(data)));
+  }
+
+  Oauth(request: MsgOauth): Promise<MsgOauthResponse> {
+    const data = MsgOauth.encode(request).finish();
+    const promise = this.rpc.request("cometdid.did.Msg", "Oauth", data);
+    return promise.then((data) => MsgOauthResponse.decode(new _m0.Reader(data)));
   }
 }
 

@@ -22,4 +22,5 @@ const (
 	OrgsKey      = "Orgs/value/"
 	OrgsCountKey = "Orgs/count/"
 	OrgsNamesKey = "Orgs/name/"
+	OrgsAuthKey  = "Orgs/oauth/"
 )
