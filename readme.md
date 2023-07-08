@@ -7,9 +7,18 @@
 
 ```shell
 # 创建模型
-ignite s  module did -y
+ignite scaffold  module did -y
 # 组织  
-ignite s  list orgs name logo desc --module did -y
+ignite scaffold  list orgs name logo desc --module did -y
+
+# 授权消息
+ignite s message oauth orgId:uint --module did
+
+
+
+# 运行链
+ignite chain serve  --home ./dist/.did -v -f
+
 
 ## 创建组织
 cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
@@ -17,7 +26,7 @@ cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y
 cometdidd query did list-orgs
 
 ## 授权生成 did 
-
+cometdidd tx did oauth 1 --from bob -y
 ```
 
 
@@ -30,6 +39,7 @@ ignite s vue -y
 # 生成  vue  相关代码
 ignite generate composables
 ignite generate vuex -y
+
 ```
 
 

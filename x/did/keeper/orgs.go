@@ -152,9 +152,9 @@ func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) {
 	store = prefix.NewStore(store, GetOrgsIDBytes(orgId))
 
 	id := did.DID{
-		Method:       "cometdid",
-		ID:           creator,
-		IDStrings:    []string{hex.EncodeToString(GetOrgsIDBytes(orgId))},
+		Method:       types.DidMethod,
+		ID:           "",
+		IDStrings:    []string{hex.EncodeToString(GetOrgsIDBytes(orgId)), creator},
 		Path:         "",
 		PathSegments: nil,
 		Fragment:     "",
