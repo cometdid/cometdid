@@ -5,11 +5,11 @@ import type { Ref } from 'vue'
 
 export default function useIbcApplicationsTransferV1() {
   const client = useClient();
-  const QueryDenomTrace = (hash=**: string,  options: any) => {
-    const key = { type: 'QueryDenomTrace',  hash=** };    
+  const QueryDenomTrace = (hash/*=***/: string,  options: any) => {
+    const key = { type: 'QueryDenomTrace',  hash/*=***/ };    
     return useQuery([key], () => {
-      const { hash=** } = key
-      return  client.IbcApplicationsTransferV1.query.queryDenomTrace(hash=**).then( res => res.data );
+      const { hash/*=***/ } = key
+      return  client.IbcApplicationsTransferV1.query.queryDenomTrace(hash/*=***/).then( res => res.data );
     }, options);
   }
   
@@ -36,11 +36,11 @@ export default function useIbcApplicationsTransferV1() {
     }, options);
   }
   
-  const QueryDenomHash = (trace=**: string,  options: any) => {
-    const key = { type: 'QueryDenomHash',  trace=** };    
+  const QueryDenomHash = (trace/*=***/: string,  options: any) => {
+    const key = { type: 'QueryDenomHash',  trace/*=***/ };    
     return useQuery([key], () => {
-      const { trace=** } = key
-      return  client.IbcApplicationsTransferV1.query.queryDenomHash(trace=**).then( res => res.data );
+      const { trace/*=***/ } = key
+      return  client.IbcApplicationsTransferV1.query.queryDenomHash(trace/*=***/).then( res => res.data );
     }, options);
   }
   
@@ -52,11 +52,11 @@ export default function useIbcApplicationsTransferV1() {
     }, options);
   }
   
-  const QueryTotalEscrowForDenom = (denom=**: string,  options: any) => {
-    const key = { type: 'QueryTotalEscrowForDenom',  denom=** };    
+  const QueryTotalEscrowForDenom = (denom/*=***/: string,  options: any) => {
+    const key = { type: 'QueryTotalEscrowForDenom',  denom/*=***/ };    
     return useQuery([key], () => {
-      const { denom=** } = key
-      return  client.IbcApplicationsTransferV1.query.queryTotalEscrowForDenom(denom=**).then( res => res.data );
+      const { denom/*=***/ } = key
+      return  client.IbcApplicationsTransferV1.query.queryTotalEscrowForDenom(denom/*=***/).then( res => res.data );
     }, options);
   }
   
