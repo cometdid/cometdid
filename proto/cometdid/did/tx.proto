@@ -1,0 +1,7 @@
+syntax = "proto3";
+package cometdid.did;
+
+option go_package = "cometdid/x/did/types";
+
+// Msg defines the Msg service.
+service Msg {}
