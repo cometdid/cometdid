@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"cometdid/x/did/types"
@@ -11,6 +12,10 @@ import (
 
 func (k msgServer) CreateOrgs(goCtx context.Context, msg *types.MsgCreateOrgs) (*types.MsgCreateOrgsResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	if k.GetOrgIdByName(ctx, msg.Name) > 0 {
+		return nil, errors.New("name exists")
+	}
 
 	var orgs = types.Orgs{
 		Creator: msg.Creator,
@@ -23,7 +28,7 @@ func (k msgServer) CreateOrgs(goCtx context.Context, msg *types.MsgCreateOrgs) (
 		ctx,
 		orgs,
 	)
-
+	k.SetOrgIdByName(ctx, msg.Name, id)
 	return &types.MsgCreateOrgsResponse{
 		Id: id,
 	}, nil
@@ -50,8 +55,15 @@ func (k msgServer) UpdateOrgs(goCtx context.Context, msg *types.MsgUpdateOrgs) (
 	if msg.Creator != val.Creator {
 		return nil, sdkerrors.Wrap(sdkerrors.ErrUnauthorized, "incorrect owner")
 	}
-
+	if id := k.GetOrgIdByName(ctx, msg.Name); id > 0 {
+		if msg.Id != id {
+			return nil, errors.New("name exists")
+		}
+	}
 	k.SetOrgs(ctx, orgs)
+	// update nameset
+	k.DelOrgIdByName(ctx, val.Name)
+	k.SetOrgIdByName(ctx, val.Name, val.Id)
 
 	return &types.MsgUpdateOrgsResponse{}, nil
 }

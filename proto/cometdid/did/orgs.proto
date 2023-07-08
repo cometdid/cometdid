@@ -9,4 +9,5 @@ message Orgs {
   string logo = 3; 
   string desc = 4; 
   string creator = 5;
+  int64 count = 6;
 }

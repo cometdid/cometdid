@@ -21,4 +21,5 @@ func KeyPrefix(p string) []byte {
 const (
 	OrgsKey      = "Orgs/value/"
 	OrgsCountKey = "Orgs/count/"
+	OrgsNamesKey = "Orgs/name/"
 )

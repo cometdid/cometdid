@@ -8,6 +8,42 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
+// GetOrgIdByName get the total number of orgs
+func (k Keeper) GetOrgIdByName(ctx sdk.Context, name string) uint64 {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsNamesKey))
+	byteKey := types.KeyPrefix(name)
+	bz := store.Get(byteKey)
+
+	// Count doesn't exist: no element
+	if bz == nil {
+		return 0
+	}
+
+	// Parse bytes
+	return binary.BigEndian.Uint64(bz)
+}
+
+// SetOrgIdByName get the total number of orgs
+func (k Keeper) SetOrgIdByName(ctx sdk.Context, name string, id uint64) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsNamesKey))
+	byteKey := types.KeyPrefix(name)
+	if id < 1 {
+		return
+	}
+	bz := GetOrgsIDBytes(id)
+	// Parse bytes
+	store.Set(byteKey, bz)
+}
+
+// DelOrgIdByName get the total number of orgs
+func (k Keeper) DelOrgIdByName(ctx sdk.Context, name string) {
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsNamesKey))
+	byteKey := types.KeyPrefix(name)
+
+	// Parse bytes
+	store.Delete(byteKey)
+}
+
 // GetOrgsCount get the total number of orgs
 func (k Keeper) GetOrgsCount(ctx sdk.Context) uint64 {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte{})

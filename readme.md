@@ -17,6 +17,10 @@ ignite s  module did -y
 # 组织  
 ignite s  list orgs name logo desc --module did -y
 
+## 创建组织
+cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
+## 显示列表
+cometdidd query did list-orgs
 
 ```
 
