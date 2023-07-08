@@ -28,7 +28,6 @@ func (k msgServer) CreateOrgs(goCtx context.Context, msg *types.MsgCreateOrgs) (
 		ctx,
 		orgs,
 	)
-	k.SetOrgIdByName(ctx, msg.Name, id)
 	return &types.MsgCreateOrgsResponse{
 		Id: id,
 	}, nil
@@ -63,12 +62,13 @@ func (k msgServer) UpdateOrgs(goCtx context.Context, msg *types.MsgUpdateOrgs) (
 	k.SetOrgs(ctx, orgs)
 	// update nameset
 	k.DelOrgIdByName(ctx, val.Name)
-	k.SetOrgIdByName(ctx, val.Name, val.Id)
 
 	return &types.MsgUpdateOrgsResponse{}, nil
 }
 
 func (k msgServer) DeleteOrgs(goCtx context.Context, msg *types.MsgDeleteOrgs) (*types.MsgDeleteOrgsResponse, error) {
+
+	return nil, sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "not support")
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// Checks that the element exists
@@ -83,6 +83,7 @@ func (k msgServer) DeleteOrgs(goCtx context.Context, msg *types.MsgDeleteOrgs) (
 	}
 
 	k.RemoveOrgs(ctx, msg.Id)
+	k.DelOrgIdByName(ctx, val.Name)
 
 	return &types.MsgDeleteOrgsResponse{}, nil
 }

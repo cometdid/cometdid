@@ -86,6 +86,7 @@ func (k Keeper) AppendOrgs(
 	// Update orgs count
 	k.SetOrgsCount(ctx, count+1)
 
+	k.SetOrgIdByName(ctx, orgs.Name, orgs.Id)
 	return count
 }
 
@@ -94,6 +95,7 @@ func (k Keeper) SetOrgs(ctx sdk.Context, orgs types.Orgs) {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsKey))
 	b := k.cdc.MustMarshal(&orgs)
 	store.Set(GetOrgsIDBytes(orgs.Id), b)
+	k.SetOrgIdByName(ctx, orgs.Name, orgs.Id)
 }
 
 // GetOrgs returns a orgs from its id
