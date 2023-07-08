@@ -4,6 +4,7 @@ import (
 	"cometdid/x/did/keeper"
 	"cometdid/x/did/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"math"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.
@@ -14,7 +15,7 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	}
 
 	// Set orgs count
-	k.SetOrgsCount(ctx, genState.OrgsCount)
+	k.SetOrgsCount(ctx, uint64(math.Max(float64(genState.OrgsCount), 1)))
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
