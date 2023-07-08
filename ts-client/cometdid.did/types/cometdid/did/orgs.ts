@@ -10,10 +10,11 @@ export interface Orgs {
   logo: string;
   desc: string;
   creator: string;
+  count: number;
 }
 
 function createBaseOrgs(): Orgs {
-  return { id: 0, name: "", logo: "", desc: "", creator: "" };
+  return { id: 0, name: "", logo: "", desc: "", creator: "", count: 0 };
 }
 
 export const Orgs = {
@@ -32,6 +33,9 @@ export const Orgs = {
     }
     if (message.creator !== "") {
       writer.uint32(42).string(message.creator);
+    }
+    if (message.count !== 0) {
+      writer.uint32(48).int64(message.count);
     }
     return writer;
   },
@@ -58,6 +62,9 @@ export const Orgs = {
         case 5:
           message.creator = reader.string();
           break;
+        case 6:
+          message.count = longToNumber(reader.int64() as Long);
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -73,6 +80,7 @@ export const Orgs = {
       logo: isSet(object.logo) ? String(object.logo) : "",
       desc: isSet(object.desc) ? String(object.desc) : "",
       creator: isSet(object.creator) ? String(object.creator) : "",
+      count: isSet(object.count) ? Number(object.count) : 0,
     };
   },
 
@@ -83,6 +91,7 @@ export const Orgs = {
     message.logo !== undefined && (obj.logo = message.logo);
     message.desc !== undefined && (obj.desc = message.desc);
     message.creator !== undefined && (obj.creator = message.creator);
+    message.count !== undefined && (obj.count = Math.round(message.count));
     return obj;
   },
 
@@ -93,6 +102,7 @@ export const Orgs = {
     message.logo = object.logo ?? "";
     message.desc = object.desc ?? "";
     message.creator = object.creator ?? "";
+    message.count = object.count ?? 0;
     return message;
   },
 };

@@ -25,6 +25,9 @@ export interface DidOrgs {
   logo?: string;
   desc?: string;
   creator?: string;
+
+  /** @format int64 */
+  count?: string;
 }
 
 /**

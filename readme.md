@@ -4,7 +4,8 @@
 ```shell
 # 生成前端代码
 ignite s vue -y
-# 生成  vuex  相关代码
+# 生成  vue  相关代码
+ignite generate composables
 ignite generate vuex -y
 ```
 

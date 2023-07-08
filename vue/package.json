@@ -46,8 +46,8 @@
     "vue-tsc": "^1.0.9"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0"
+    "node": "\u003e=16.0.0",
+    "npm": "\u003e=8.0.0"
   },
   "name": "@ignt/vue-template",
   "private": true,
