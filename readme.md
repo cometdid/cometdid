@@ -1,3 +1,34 @@
+# 开发记录
+
+## 生成前端
+```shell
+# 生成前端代码
+ignite s vue -y
+# 生成  vuex  相关代码
+ignite generate vuex -y
+```
+
+
+## 构建消息
+
+```shell
+# 创建模型
+ignite s  module did -y
+# 构建 组织 注册
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
 # cometdid
 **cometdid** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
 
