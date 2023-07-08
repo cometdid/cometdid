@@ -29,6 +29,9 @@ paths:
                       type: string
                     creator:
                       type: string
+                    count:
+                      type: string
+                      format: int64
               pagination:
                 type: object
                 properties:
@@ -158,6 +161,9 @@ paths:
                     type: string
                   creator:
                     type: string
+                  count:
+                    type: string
+                    format: int64
         default:
           description: An unexpected error response.
           schema:
@@ -46678,6 +46684,9 @@ definitions:
         type: string
       creator:
         type: string
+      count:
+        type: string
+        format: int64
   cometdid.did.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -46700,6 +46709,9 @@ definitions:
               type: string
             creator:
               type: string
+            count:
+              type: string
+              format: int64
       pagination:
         type: object
         properties:
@@ -46743,6 +46755,9 @@ definitions:
             type: string
           creator:
             type: string
+          count:
+            type: string
+            format: int64
   cometdid.did.QueryParamsResponse:
     type: object
     properties:
