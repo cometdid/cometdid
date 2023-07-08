@@ -1,7 +1,42 @@
 syntax = "proto3";
+
 package cometdid.did;
+
+import "cometdid/did/orgs.proto";
 
 option go_package = "cometdid/x/did/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateOrgs (MsgCreateOrgs) returns (MsgCreateOrgsResponse);
+  rpc UpdateOrgs (MsgUpdateOrgs) returns (MsgUpdateOrgsResponse);
+  rpc DeleteOrgs (MsgDeleteOrgs) returns (MsgDeleteOrgsResponse);
+}
+message MsgCreateOrgs {
+  string creator = 1;
+  string name    = 2;
+  string logo    = 3;
+  string desc    = 4;
+}
+
+message MsgCreateOrgsResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateOrgs {
+  string creator = 1;
+  uint64 id      = 2;
+  string name    = 3;
+  string logo    = 4;
+  string desc    = 5;
+}
+
+message MsgUpdateOrgsResponse {}
+
+message MsgDeleteOrgs {
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteOrgsResponse {}
+

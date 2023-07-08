@@ -14,8 +14,8 @@ ignite generate vuex -y
 ```shell
 # 创建模型
 ignite s  module did -y
-# 构建 组织 注册
-
+# 组织  
+ignite s  list orgs name logo desc --module did -y
 
 
 ```

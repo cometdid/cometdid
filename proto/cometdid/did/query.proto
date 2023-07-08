@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package cometdid.did;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "cometdid/did/params.proto";
+import "cometdid/did/orgs.proto";
 
 option go_package = "cometdid/x/did/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/cometdid/did/params";
+  
+  }
+  
+  // Queries a list of Orgs items.
+  rpc Orgs    (QueryGetOrgsRequest) returns (QueryGetOrgsResponse) {
+    option (google.api.http).get = "/cometdid/did/orgs/{id}";
+  
+  }
+  rpc OrgsAll (QueryAllOrgsRequest) returns (QueryAllOrgsResponse) {
+    option (google.api.http).get = "/cometdid/did/orgs";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetOrgsRequest {
+  uint64 id = 1;
+}
+
+message QueryGetOrgsResponse {
+  Orgs Orgs = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllOrgsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllOrgsResponse {
+  repeated Orgs                                   Orgs       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

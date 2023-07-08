@@ -1,0 +1,12 @@
+syntax = "proto3";
+package cometdid.did;
+
+option go_package = "cometdid/x/did/types";
+
+message Orgs {
+  uint64 id = 1;
+  string name = 2; 
+  string logo = 3; 
+  string desc = 4; 
+  string creator = 5;
+}
