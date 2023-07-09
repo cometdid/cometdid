@@ -34,3 +34,7 @@ genesis:
 validators:
 - name: alice
   bonded: 100000000stake
+
+
+config:
+  log_level: 'debug'
