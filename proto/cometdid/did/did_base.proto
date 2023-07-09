@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package cometdid.did;
+
+option go_package = "cometdid/x/did/types";
+
+
+message UserOauth {
+  string creator = 1;
+  uint64 orgId = 2;
+  string name = 3;
+  string avatar = 4;
+  string  did = 5;
+}

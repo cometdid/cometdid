@@ -146,18 +146,23 @@ func GetOrgsIDFromBytes(bz []byte) uint64 {
 }
 
 // UserAuth build user did
-func (k Keeper) UserAuth(ctx sdk.Context, orgId uint64, creator string) string {
+func (k Keeper) UserAuth(ctx sdk.Context, msg types.UserOauth) string {
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.OrgsAuthKey))
-	accAddress, _ := sdk.AccAddressFromBech32(creator)
+	accAddress, _ := sdk.AccAddressFromBech32(msg.Creator)
 	store = prefix.NewStore(store, append([]byte(accAddress)[:], '/'))
 	id := did.DID{
 		Method:       types.DidMethod,
 		ID:           "",
-		IDStrings:    []string{hex.EncodeToString(GetOrgsIDBytes(orgId)), creator},
+		IDStrings:    []string{hex.EncodeToString(GetOrgsIDBytes(msg.OrgId)), msg.Creator},
 		Path:         "",
 		PathSegments: nil,
 		Fragment:     "",
 	}
-	store.Set(GetOrgsIDBytes(orgId), []byte(id.String()))
+	msg.Did = id.String()
+
+	bz := k.cdc.MustMarshal(&msg)
+
+	// store id
+	store.Set(GetOrgsIDBytes(msg.OrgId), bz)
 	return id.String()
 }

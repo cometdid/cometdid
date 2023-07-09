@@ -46,6 +46,7 @@ message MsgOauth {
   uint64 orgId = 2;
   string name = 3;
   string avatar = 4;
+  string did = 5;
 }
 
 message MsgOauthResponse {
