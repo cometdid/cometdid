@@ -12,8 +12,10 @@ ignite scaffold  module did -y
 ignite scaffold  list orgs name logo desc --module did -y
 
 # 授权消息
-ignite s message oauth orgId:uint --module did
+ignite s message oauth orgId:uint name avator --module did
 
+# 查询验证  did
+ignite s query  validDid did --module did
 
 
 # 运行链
@@ -27,6 +29,7 @@ cometdidd query did list-orgs
 
 ## 授权生成 did 
 cometdidd tx did oauth 1 test avator.png --from bob -y
+
 ```
 
 

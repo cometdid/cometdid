@@ -1,10 +1,11 @@
 import { Client, registry, MissingWalletError } from 'cometdid-client-ts'
 
+import { UserOauth } from "cometdid-client-ts/cometdid.did/types"
 import { Orgs } from "cometdid-client-ts/cometdid.did/types"
 import { Params } from "cometdid-client-ts/cometdid.did/types"
 
 
-export { Orgs, Params };
+export { UserOauth, Orgs, Params };
 
 function initClient(vuexGetters) {
 	return new Client(vuexGetters['common/env/getEnv'], vuexGetters['common/wallet/signer'])
@@ -38,8 +39,10 @@ const getDefaultState = () => {
 				Params: {},
 				Orgs: {},
 				OrgsAll: {},
+				ValidDid: {},
 				
 				_Structure: {
+						UserOauth: getStructure(UserOauth.fromPartial({})),
 						Orgs: getStructure(Orgs.fromPartial({})),
 						Params: getStructure(Params.fromPartial({})),
 						
@@ -87,6 +90,12 @@ export default {
 						(<any> params).query=null
 					}
 			return state.OrgsAll[JSON.stringify(params)] ?? {}
+		},
+				getValidDid: (state) => (params = { params: {}}) => {
+					if (!(<any> params).query) {
+						(<any> params).query=null
+					}
+			return state.ValidDid[JSON.stringify(params)] ?? {}
 		},
 				
 		getTypeStructure: (state) => (type) => {
@@ -192,17 +201,39 @@ export default {
 		},
 		
 		
-		async sendMsgCreateOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
+		
+		
+		 		
+		
+		
+		async QueryValidDid({ commit, rootGetters, getters }, { options: { subscribe, all} = { subscribe:false, all:false}, params, query=null }) {
+			try {
+				const key = params ?? {};
+				const client = initClient(rootGetters);
+				let value= (await client.CometdidDid.query.queryValidDid( key.did)).data
+				
+					
+				commit('QUERY', { query: 'ValidDid', key: { params: {...key}, query}, value })
+				if (subscribe) commit('SUBSCRIBE', { action: 'QueryValidDid', payload: { options: { all }, params: {...key},query }})
+				return getters['getValidDid']( { params: {...key}, query}) ?? {}
+			} catch (e) {
+				throw new Error('QueryClient:QueryValidDid API Node Unavailable. Could not perform query: ' + e.message)
+				
+			}
+		},
+		
+		
+		async sendMsgOauth({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
 				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
-				const result = await client.CometdidDid.tx.sendMsgCreateOrgs({ value, fee: fullFee, memo })
+				const result = await client.CometdidDid.tx.sendMsgOauth({ value, fee: fullFee, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateOrgs:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgCreateOrgs:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgOauth:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -220,17 +251,17 @@ export default {
 				}
 			}
 		},
-		async sendMsgOauth({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
+		async sendMsgCreateOrgs({ rootGetters }, { value, fee = {amount: [], gas: "200000"}, memo = '' }) {
 			try {
 				const client=await initClient(rootGetters)
 				const fullFee = Array.isArray(fee)  ? {amount: fee, gas: "200000"} :fee;
-				const result = await client.CometdidDid.tx.sendMsgOauth({ value, fee: fullFee, memo })
+				const result = await client.CometdidDid.tx.sendMsgCreateOrgs({ value, fee: fullFee, memo })
 				return result
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateOrgs:Init Could not initialize signing client. Wallet is required.')
 				}else{
-					throw new Error('TxClient:MsgOauth:Send Could not broadcast Tx: '+ e.message)
+					throw new Error('TxClient:MsgCreateOrgs:Send Could not broadcast Tx: '+ e.message)
 				}
 			}
 		},
@@ -249,16 +280,16 @@ export default {
 			}
 		},
 		
-		async MsgCreateOrgs({ rootGetters }, { value }) {
+		async MsgOauth({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CometdidDid.tx.msgCreateOrgs({value})
+				const msg = await client.CometdidDid.tx.msgOauth({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgCreateOrgs:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgCreateOrgs:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgOauth:Create Could not create message: ' + e.message)
 				}
 			}
 		},
@@ -275,16 +306,16 @@ export default {
 				}
 			}
 		},
-		async MsgOauth({ rootGetters }, { value }) {
+		async MsgCreateOrgs({ rootGetters }, { value }) {
 			try {
 				const client=initClient(rootGetters)
-				const msg = await client.CometdidDid.tx.msgOauth({value})
+				const msg = await client.CometdidDid.tx.msgCreateOrgs({value})
 				return msg
 			} catch (e) {
 				if (e == MissingWalletError) {
-					throw new Error('TxClient:MsgOauth:Init Could not initialize signing client. Wallet is required.')
+					throw new Error('TxClient:MsgCreateOrgs:Init Could not initialize signing client. Wallet is required.')
 				} else{
-					throw new Error('TxClient:MsgOauth:Create Could not create message: ' + e.message)
+					throw new Error('TxClient:MsgCreateOrgs:Create Could not create message: ' + e.message)
 				}
 			}
 		},

@@ -37,9 +37,13 @@ export interface MsgDeleteOrgsResponse {
 export interface MsgOauth {
   creator: string;
   orgId: number;
+  name: string;
+  avatar: string;
+  did: string;
 }
 
 export interface MsgOauthResponse {
+  did: string;
 }
 
 function createBaseMsgCreateOrgs(): MsgCreateOrgs {
@@ -387,7 +391,7 @@ export const MsgDeleteOrgsResponse = {
 };
 
 function createBaseMsgOauth(): MsgOauth {
-  return { creator: "", orgId: 0 };
+  return { creator: "", orgId: 0, name: "", avatar: "", did: "" };
 }
 
 export const MsgOauth = {
@@ -397,6 +401,15 @@ export const MsgOauth = {
     }
     if (message.orgId !== 0) {
       writer.uint32(16).uint64(message.orgId);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.avatar !== "") {
+      writer.uint32(34).string(message.avatar);
+    }
+    if (message.did !== "") {
+      writer.uint32(42).string(message.did);
     }
     return writer;
   },
@@ -414,6 +427,15 @@ export const MsgOauth = {
         case 2:
           message.orgId = longToNumber(reader.uint64() as Long);
           break;
+        case 3:
+          message.name = reader.string();
+          break;
+        case 4:
+          message.avatar = reader.string();
+          break;
+        case 5:
+          message.did = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -426,6 +448,9 @@ export const MsgOauth = {
     return {
       creator: isSet(object.creator) ? String(object.creator) : "",
       orgId: isSet(object.orgId) ? Number(object.orgId) : 0,
+      name: isSet(object.name) ? String(object.name) : "",
+      avatar: isSet(object.avatar) ? String(object.avatar) : "",
+      did: isSet(object.did) ? String(object.did) : "",
     };
   },
 
@@ -433,6 +458,9 @@ export const MsgOauth = {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
     message.orgId !== undefined && (obj.orgId = Math.round(message.orgId));
+    message.name !== undefined && (obj.name = message.name);
+    message.avatar !== undefined && (obj.avatar = message.avatar);
+    message.did !== undefined && (obj.did = message.did);
     return obj;
   },
 
@@ -440,16 +468,22 @@ export const MsgOauth = {
     const message = createBaseMsgOauth();
     message.creator = object.creator ?? "";
     message.orgId = object.orgId ?? 0;
+    message.name = object.name ?? "";
+    message.avatar = object.avatar ?? "";
+    message.did = object.did ?? "";
     return message;
   },
 };
 
 function createBaseMsgOauthResponse(): MsgOauthResponse {
-  return {};
+  return { did: "" };
 }
 
 export const MsgOauthResponse = {
-  encode(_: MsgOauthResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgOauthResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.did !== "") {
+      writer.uint32(10).string(message.did);
+    }
     return writer;
   },
 
@@ -460,6 +494,9 @@ export const MsgOauthResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.did = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -468,17 +505,19 @@ export const MsgOauthResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgOauthResponse {
-    return {};
+  fromJSON(object: any): MsgOauthResponse {
+    return { did: isSet(object.did) ? String(object.did) : "" };
   },
 
-  toJSON(_: MsgOauthResponse): unknown {
+  toJSON(message: MsgOauthResponse): unknown {
     const obj: any = {};
+    message.did !== undefined && (obj.did = message.did);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<MsgOauthResponse>, I>>(_: I): MsgOauthResponse {
+  fromPartial<I extends Exact<DeepPartial<MsgOauthResponse>, I>>(object: I): MsgOauthResponse {
     const message = createBaseMsgOauthResponse();
+    message.did = object.did ?? "";
     return message;
   },
 };

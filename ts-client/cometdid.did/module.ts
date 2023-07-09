@@ -7,18 +7,19 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgCreateOrgs } from "./types/cometdid/did/tx";
-import { MsgDeleteOrgs } from "./types/cometdid/did/tx";
 import { MsgOauth } from "./types/cometdid/did/tx";
+import { MsgDeleteOrgs } from "./types/cometdid/did/tx";
+import { MsgCreateOrgs } from "./types/cometdid/did/tx";
 import { MsgUpdateOrgs } from "./types/cometdid/did/tx";
 
+import { UserOauth as typeUserOauth} from "./types"
 import { Orgs as typeOrgs} from "./types"
 import { Params as typeParams} from "./types"
 
-export { MsgCreateOrgs, MsgDeleteOrgs, MsgOauth, MsgUpdateOrgs };
+export { MsgOauth, MsgDeleteOrgs, MsgCreateOrgs, MsgUpdateOrgs };
 
-type sendMsgCreateOrgsParams = {
-  value: MsgCreateOrgs,
+type sendMsgOauthParams = {
+  value: MsgOauth,
   fee?: StdFee,
   memo?: string
 };
@@ -29,8 +30,8 @@ type sendMsgDeleteOrgsParams = {
   memo?: string
 };
 
-type sendMsgOauthParams = {
-  value: MsgOauth,
+type sendMsgCreateOrgsParams = {
+  value: MsgCreateOrgs,
   fee?: StdFee,
   memo?: string
 };
@@ -42,16 +43,16 @@ type sendMsgUpdateOrgsParams = {
 };
 
 
-type msgCreateOrgsParams = {
-  value: MsgCreateOrgs,
+type msgOauthParams = {
+  value: MsgOauth,
 };
 
 type msgDeleteOrgsParams = {
   value: MsgDeleteOrgs,
 };
 
-type msgOauthParams = {
-  value: MsgOauth,
+type msgCreateOrgsParams = {
+  value: MsgCreateOrgs,
 };
 
 type msgUpdateOrgsParams = {
@@ -88,17 +89,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgCreateOrgs({ value, fee, memo }: sendMsgCreateOrgsParams): Promise<DeliverTxResponse> {
+		async sendMsgOauth({ value, fee, memo }: sendMsgOauthParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgCreateOrgs: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgOauth: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgCreateOrgs({ value: MsgCreateOrgs.fromPartial(value) })
+				let msg = this.msgOauth({ value: MsgOauth.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgCreateOrgs: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgOauth: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -116,17 +117,17 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		async sendMsgOauth({ value, fee, memo }: sendMsgOauthParams): Promise<DeliverTxResponse> {
+		async sendMsgCreateOrgs({ value, fee, memo }: sendMsgCreateOrgsParams): Promise<DeliverTxResponse> {
 			if (!signer) {
-					throw new Error('TxClient:sendMsgOauth: Unable to sign Tx. Signer is not present.')
+					throw new Error('TxClient:sendMsgCreateOrgs: Unable to sign Tx. Signer is not present.')
 			}
 			try {			
 				const { address } = (await signer.getAccounts())[0]; 
 				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgOauth({ value: MsgOauth.fromPartial(value) })
+				let msg = this.msgCreateOrgs({ value: MsgCreateOrgs.fromPartial(value) })
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:sendMsgOauth: Could not broadcast Tx: '+ e.message)
+				throw new Error('TxClient:sendMsgCreateOrgs: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -145,11 +146,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 		},
 		
 		
-		msgCreateOrgs({ value }: msgCreateOrgsParams): EncodeObject {
+		msgOauth({ value }: msgOauthParams): EncodeObject {
 			try {
-				return { typeUrl: "/cometdid.did.MsgCreateOrgs", value: MsgCreateOrgs.fromPartial( value ) }  
+				return { typeUrl: "/cometdid.did.MsgOauth", value: MsgOauth.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgCreateOrgs: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgOauth: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -161,11 +162,11 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		msgOauth({ value }: msgOauthParams): EncodeObject {
+		msgCreateOrgs({ value }: msgCreateOrgsParams): EncodeObject {
 			try {
-				return { typeUrl: "/cometdid.did.MsgOauth", value: MsgOauth.fromPartial( value ) }  
+				return { typeUrl: "/cometdid.did.MsgCreateOrgs", value: MsgCreateOrgs.fromPartial( value ) }  
 			} catch (e: any) {
-				throw new Error('TxClient:MsgOauth: Could not create message: ' + e.message)
+				throw new Error('TxClient:MsgCreateOrgs: Could not create message: ' + e.message)
 			}
 		},
 		
@@ -199,6 +200,7 @@ class SDKModule {
 		this.query = queryClient({ addr: client.env.apiURL });		
 		this.updateTX(client);
 		this.structure =  {
+						UserOauth: getStructure(typeUserOauth.fromPartial({})),
 						Orgs: getStructure(typeOrgs.fromPartial({})),
 						Params: getStructure(typeParams.fromPartial({})),
 						

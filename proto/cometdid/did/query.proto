@@ -28,6 +28,12 @@ service Query {
     option (google.api.http).get = "/cometdid/did/orgs";
   
   }
+  
+  // Queries a list of ValidDid items.
+  rpc ValidDid (QueryValidDidRequest) returns (QueryValidDidResponse) {
+    option (google.api.http).get = "/cometdid/did/valid_did/{did}";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -54,5 +60,14 @@ message QueryAllOrgsRequest {
 message QueryAllOrgsResponse {
   repeated Orgs                                   Orgs       = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryValidDidRequest {
+  string did = 1;
+}
+
+message QueryValidDidResponse {
+  string name = 1;
+  string avatar = 2;
 }
 
