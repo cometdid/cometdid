@@ -235,6 +235,11 @@ paths:
           description: A successful response.
           schema:
             type: object
+            properties:
+              name:
+                type: string
+              avatar:
+                type: string
         default:
           description: An unexpected error response.
           schema:
@@ -46806,6 +46811,11 @@ definitions:
     description: QueryParamsResponse is response type for the Query/Params RPC method.
   cometdid.did.QueryValidDidResponse:
     type: object
+    properties:
+      name:
+        type: string
+      avatar:
+        type: string
   cosmos.base.query.v1beta1.PageRequest:
     type: object
     properties:
