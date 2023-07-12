@@ -26,18 +26,20 @@ ignite chain serve  --home ./dist/.did -v -f
 
 
 ## 创建组织
-cometdidd  --home ./dist/.did tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
-cometdidd  --home ./dist/.did tx did create-orgs testorg1 testorg1.png "testorg desc" --from bob -y 
+cometdidd --home ./dist/.did tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
+cometdidd --home ./dist/.did tx did create-orgs testorg1 testorg1.png "testorg desc" --from bob -y 
 ## 显示列表
-cometdidd  --home ./dist/.did  query did list-orgs
+cometdidd --home ./dist/.did  query did list-orgs
 
 ## 授权生成 did 
-cometdidd   --home ./dist/.did  tx did oauth 1  nickname avator.png --from bob -y
+cometdidd --home ./dist/.did  tx did oauth 1  nickname avator.png --from bob -y
 # did:cometdid:1:bob-address  
 # nickname  avator.png
 # ether did
 # did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
 
+
+cometdidd --home ./dist/.did  query did  valid-did did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
 ```
 
 
