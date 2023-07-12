@@ -6,6 +6,9 @@
 ## 构建消息
 
 ```shell
+# 创建链
+ignite scaffold chain cometdid --no-module --address-prefix did
+
 # 创建模型
 ignite scaffold  module did -y
 # 组织  
@@ -28,7 +31,9 @@ cometdidd tx did create-orgs testorg testorg.png "testorg desc" --from bob -y
 cometdidd query did list-orgs
 
 ## 授权生成 did 
-cometdidd tx did oauth 1 test avator.png --from bob -y
+cometdidd tx did oauth 1  nickname avator.png --from bob -y
+# did:cometdid:1:bob-address  
+# nickname  avator.png
 
 ```
 
