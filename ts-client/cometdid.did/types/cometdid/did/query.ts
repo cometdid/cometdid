@@ -39,6 +39,8 @@ export interface QueryValidDidRequest {
 }
 
 export interface QueryValidDidResponse {
+  name: string;
+  avatar: string;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -386,11 +388,17 @@ export const QueryValidDidRequest = {
 };
 
 function createBaseQueryValidDidResponse(): QueryValidDidResponse {
-  return {};
+  return { name: "", avatar: "" };
 }
 
 export const QueryValidDidResponse = {
-  encode(_: QueryValidDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryValidDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.avatar !== "") {
+      writer.uint32(18).string(message.avatar);
+    }
     return writer;
   },
 
@@ -401,6 +409,12 @@ export const QueryValidDidResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.avatar = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -409,17 +423,24 @@ export const QueryValidDidResponse = {
     return message;
   },
 
-  fromJSON(_: any): QueryValidDidResponse {
-    return {};
+  fromJSON(object: any): QueryValidDidResponse {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      avatar: isSet(object.avatar) ? String(object.avatar) : "",
+    };
   },
 
-  toJSON(_: QueryValidDidResponse): unknown {
+  toJSON(message: QueryValidDidResponse): unknown {
     const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.avatar !== undefined && (obj.avatar = message.avatar);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryValidDidResponse>, I>>(_: I): QueryValidDidResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryValidDidResponse>, I>>(object: I): QueryValidDidResponse {
     const message = createBaseQueryValidDidResponse();
+    message.name = object.name ?? "";
+    message.avatar = object.avatar ?? "";
     return message;
   },
 };

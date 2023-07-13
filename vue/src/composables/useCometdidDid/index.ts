@@ -36,6 +36,14 @@ export default function useCometdidDid() {
     );
   }
   
-  return {QueryParams,QueryOrgs,QueryOrgsAll,
+  const QueryValidDid = (did: string,  options: any) => {
+    const key = { type: 'QueryValidDid',  did };    
+    return useQuery([key], () => {
+      const { did } = key
+      return  client.CometdidDid.query.queryValidDid(did).then( res => res.data );
+    }, options);
+  }
+  
+  return {QueryParams,QueryOrgs,QueryOrgsAll,QueryValidDid,
   }
 }

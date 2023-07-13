@@ -27,14 +27,10 @@ client:
   openapi:
     path: docs/static/openapi.yml
 genesis:
-  chain_id: did_0708
   app_state:
     did:
       orgsCount: 1
+  chain_id: did_0708
 validators:
 - name: alice
   bonded: 100000000stake
-
-
-config:
-  log_level: 'debug'

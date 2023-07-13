@@ -66,7 +66,10 @@ export interface DidQueryParamsResponse {
   params?: DidParams;
 }
 
-export type DidQueryValidDidResponse = object;
+export interface DidQueryValidDidResponse {
+  name?: string;
+  avatar?: string;
+}
 
 export interface ProtobufAny {
   "@type"?: string;
