@@ -6,6 +6,7 @@
 ## 构建消息
 
 ```shell
+######## 一下这些无需重复执行
 # 创建链
 ignite scaffold chain cometdid --no-module --address-prefix did
 
@@ -22,6 +23,8 @@ ignite s query  validDid did --module did
 ignite s query  did orgId:uint creator --module did
 
 
+
+##### 每次运行都要用。
 # 运行链
 ignite chain serve  --home ./dist/.did -v -f
 
@@ -40,8 +43,6 @@ cometdidd --home ./dist/.did  query did  did 1 did13lfkfvslurdzaaflvwnnx6wsxkya4
 # nickname  avator.png
 # ether did
 # did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
-
-
 cometdidd --home ./dist/.did  query did  valid-did did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
 
 # 转账给 pi
