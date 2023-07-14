@@ -25,6 +25,17 @@
         >Oauth
         </IgntButton
         >
+
+        <div v-if="state.result">
+          <div>
+            did:<br>
+            {{state.result.did}}
+          </div>
+          <div>
+            nickname:<br>
+            {{state.result.name}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +43,7 @@
 
 <script setup lang="ts">
 import {useAddress} from "@/def-composables/useAddress";
-import {reactive} from "vue";
+import {onMounted, reactive} from "vue";
 import {IgntButton} from "@ignt/vue-library";
 import {useClient} from "@/composables/useClient";
 import {} from "@/composables/useCometdidDid/index"
@@ -46,6 +57,7 @@ interface State {
   orgID: number;
   name: string;
   avatar: string;
+  result?: MsgOauth;
 }
 
 const initialState: State = {
@@ -84,6 +96,23 @@ const oauth = async (): Promise<void> => {
 
 
 const query = async ():Promise<void> =>{
-
+  if (!address ||!address.value) {
+    state.result = null;
+    return
+  }
+  client.CometdidDid.query.queryDid(state.orgID,address.value).then((res)=>{
+    // console.log(res.data)
+    state.result = {
+      creator: address.value,
+      orgId: state.orgID,
+      name: res.data.name,
+      avatar: res.data.avatar,
+      did:res.data.did,
+    };
+  })
 }
+
+onMounted(()=>{
+  setInterval(query,1000)
+})
 </script>

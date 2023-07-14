@@ -26,7 +26,7 @@ ignite s query  did orgId:uint creator --module did
 
 ##### 每次运行都要用。
 # 运行链
-ignite chain serve  --home ./dist/.did -v -f
+ignite chain serve  --home ./dist/.did -v  
 
 
 ## 创建组织
