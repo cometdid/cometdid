@@ -47,7 +47,8 @@
           <br/>
           <div>
             avator:<br>
-             {{state.result.avator}}
+             {{state.result.avatar}}
+            <img :src="state.result.avatar" width="100">
           </div>
         </div>
       </div>
