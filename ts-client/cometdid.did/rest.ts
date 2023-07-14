@@ -54,6 +54,8 @@ export interface DidQueryAllOrgsResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export type DidQueryDidResponse = object;
+
 export interface DidQueryGetOrgsResponse {
   Orgs?: DidOrgs;
 }
@@ -279,6 +281,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDid
+   * @summary Queries a list of Did items.
+   * @request GET:/cometdid/did/did/{orgId}/{creator}
+   */
+  queryDid = (orgId: string, creator: string, params: RequestParams = {}) =>
+    this.request<DidQueryDidResponse, RpcStatus>({
+      path: `/cometdid/did/did/${orgId}/${creator}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

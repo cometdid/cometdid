@@ -19,6 +19,7 @@ ignite s message oauth orgId:uint name avator --module did
 
 # 查询验证  did
 ignite s query  validDid did --module did
+ignite s query  did orgId:uint creator --module did
 
 
 # 运行链
@@ -33,6 +34,8 @@ cometdidd --home ./dist/.did  query did list-orgs
 
 ## 授权生成 did 
 cometdidd --home ./dist/.did  tx did oauth 1  nickname avator.png --from bob -y
+# 查询 DID
+cometdidd --home ./dist/.did  query did  did 1 did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
 # did:cometdid:1:bob-address  
 # nickname  avator.png
 # ether did
@@ -40,6 +43,7 @@ cometdidd --home ./dist/.did  tx did oauth 1  nickname avator.png --from bob -y
 
 
 cometdidd --home ./dist/.did  query did  valid-did did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
+
 # 转账给 pi
 cometdidd  --home ./dist/.did   tx bank send  did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0 did140um02k4h2pqjn3saqetz57k2xfxsl95zc5a4z  10000000token
 ```

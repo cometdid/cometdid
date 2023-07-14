@@ -43,6 +43,14 @@ export interface QueryValidDidResponse {
   avatar: string;
 }
 
+export interface QueryDidRequest {
+  orgId: number;
+  creator: string;
+}
+
+export interface QueryDidResponse {
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -445,6 +453,103 @@ export const QueryValidDidResponse = {
   },
 };
 
+function createBaseQueryDidRequest(): QueryDidRequest {
+  return { orgId: 0, creator: "" };
+}
+
+export const QueryDidRequest = {
+  encode(message: QueryDidRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.orgId !== 0) {
+      writer.uint32(8).uint64(message.orgId);
+    }
+    if (message.creator !== "") {
+      writer.uint32(18).string(message.creator);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDidRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDidRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.orgId = longToNumber(reader.uint64() as Long);
+          break;
+        case 2:
+          message.creator = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDidRequest {
+    return {
+      orgId: isSet(object.orgId) ? Number(object.orgId) : 0,
+      creator: isSet(object.creator) ? String(object.creator) : "",
+    };
+  },
+
+  toJSON(message: QueryDidRequest): unknown {
+    const obj: any = {};
+    message.orgId !== undefined && (obj.orgId = Math.round(message.orgId));
+    message.creator !== undefined && (obj.creator = message.creator);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDidRequest>, I>>(object: I): QueryDidRequest {
+    const message = createBaseQueryDidRequest();
+    message.orgId = object.orgId ?? 0;
+    message.creator = object.creator ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryDidResponse(): QueryDidResponse {
+  return {};
+}
+
+export const QueryDidResponse = {
+  encode(_: QueryDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDidResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDidResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryDidResponse {
+    return {};
+  },
+
+  toJSON(_: QueryDidResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDidResponse>, I>>(_: I): QueryDidResponse {
+    const message = createBaseQueryDidResponse();
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -454,6 +559,8 @@ export interface Query {
   OrgsAll(request: QueryAllOrgsRequest): Promise<QueryAllOrgsResponse>;
   /** Queries a list of ValidDid items. */
   ValidDid(request: QueryValidDidRequest): Promise<QueryValidDidResponse>;
+  /** Queries a list of Did items. */
+  Did(request: QueryDidRequest): Promise<QueryDidResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -464,6 +571,7 @@ export class QueryClientImpl implements Query {
     this.Orgs = this.Orgs.bind(this);
     this.OrgsAll = this.OrgsAll.bind(this);
     this.ValidDid = this.ValidDid.bind(this);
+    this.Did = this.Did.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -487,6 +595,12 @@ export class QueryClientImpl implements Query {
     const data = QueryValidDidRequest.encode(request).finish();
     const promise = this.rpc.request("cometdid.did.Query", "ValidDid", data);
     return promise.then((data) => QueryValidDidResponse.decode(new _m0.Reader(data)));
+  }
+
+  Did(request: QueryDidRequest): Promise<QueryDidResponse> {
+    const data = QueryDidRequest.encode(request).finish();
+    const promise = this.rpc.request("cometdid.did.Query", "Did", data);
+    return promise.then((data) => QueryDidResponse.decode(new _m0.Reader(data)));
   }
 }
 

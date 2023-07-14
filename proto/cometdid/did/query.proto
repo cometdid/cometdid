@@ -34,6 +34,12 @@ service Query {
     option (google.api.http).get = "/cometdid/did/valid_did/{did}";
   
   }
+  
+  // Queries a list of Did items.
+  rpc Did (QueryDidRequest) returns (QueryDidResponse) {
+    option (google.api.http).get = "/cometdid/did/did/{orgId}/{creator}";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -67,7 +73,18 @@ message QueryValidDidRequest {
 }
 
 message QueryValidDidResponse {
-  string name = 1;
+  string name   = 1;
   string avatar = 2;
+}
+
+message QueryDidRequest {
+  uint64 orgId   = 1;
+  string creator = 2;
+}
+
+message QueryDidResponse {
+  string name   = 1;
+  string avatar = 2;
+  string did = 3;
 }
 
