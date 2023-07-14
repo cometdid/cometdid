@@ -43,6 +43,14 @@ export interface QueryValidDidResponse {
   avatar: string;
 }
 
+export interface QueryOrgDidRequest {
+  orgId: number;
+}
+
+export interface QueryOrgDidResponse {
+  did: string;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -445,6 +453,92 @@ export const QueryValidDidResponse = {
   },
 };
 
+function createBaseQueryOrgDidRequest(): QueryOrgDidRequest {
+  return { orgId: 0 };
+}
+
+export const QueryOrgDidRequest = {
+  encode(message: QueryOrgDidRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.orgId !== 0) {
+      writer.uint32(8).uint64(message.orgId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryOrgDidRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOrgDidRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.orgId = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryOrgDidRequest {
+    return { orgId: isSet(object.orgId) ? Number(object.orgId) : 0 };
+  },
+
+  toJSON(message: QueryOrgDidRequest): unknown {
+    const obj: any = {};
+    message.orgId !== undefined && (obj.orgId = Math.round(message.orgId));
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryOrgDidRequest>, I>>(object: I): QueryOrgDidRequest {
+    const message = createBaseQueryOrgDidRequest();
+    message.orgId = object.orgId ?? 0;
+    return message;
+  },
+};
+
+function createBaseQueryOrgDidResponse(): QueryOrgDidResponse {
+  return {};
+}
+
+export const QueryOrgDidResponse = {
+  encode(_: QueryOrgDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryOrgDidResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOrgDidResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryOrgDidResponse {
+    return {};
+  },
+
+  toJSON(_: QueryOrgDidResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryOrgDidResponse>, I>>(_: I): QueryOrgDidResponse {
+    const message = createBaseQueryOrgDidResponse();
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -454,6 +548,8 @@ export interface Query {
   OrgsAll(request: QueryAllOrgsRequest): Promise<QueryAllOrgsResponse>;
   /** Queries a list of ValidDid items. */
   ValidDid(request: QueryValidDidRequest): Promise<QueryValidDidResponse>;
+  /** Queries a list of OrgDid items. */
+  OrgDid(request: QueryOrgDidRequest): Promise<QueryOrgDidResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -464,6 +560,7 @@ export class QueryClientImpl implements Query {
     this.Orgs = this.Orgs.bind(this);
     this.OrgsAll = this.OrgsAll.bind(this);
     this.ValidDid = this.ValidDid.bind(this);
+    this.OrgDid = this.OrgDid.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -487,6 +584,12 @@ export class QueryClientImpl implements Query {
     const data = QueryValidDidRequest.encode(request).finish();
     const promise = this.rpc.request("cometdid.did.Query", "ValidDid", data);
     return promise.then((data) => QueryValidDidResponse.decode(new _m0.Reader(data)));
+  }
+
+  OrgDid(request: QueryOrgDidRequest): Promise<QueryOrgDidResponse> {
+    const data = QueryOrgDidRequest.encode(request).finish();
+    const promise = this.rpc.request("cometdid.did.Query", "OrgDid", data);
+    return promise.then((data) => QueryOrgDidResponse.decode(new _m0.Reader(data)));
   }
 }
 

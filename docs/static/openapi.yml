@@ -4,6 +4,44 @@ info:
   name: ''
   description: ''
 paths:
+  /cometdid/did/org_did/{orgId}:
+    get:
+      summary: Queries a list of OrgDid items.
+      operationId: CometdidDidOrgDid
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              did:
+                type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          type: string
+          format: uint64
+      tags:
+        - Query
   /cometdid/did/orgs:
     get:
       operationId: CometdidDidOrgsAll
@@ -46802,6 +46840,11 @@ definitions:
           count:
             type: string
             format: int64
+  cometdid.did.QueryOrgDidResponse:
+    type: object
+    properties:
+      did:
+        type: string
   cometdid.did.QueryParamsResponse:
     type: object
     properties:

@@ -58,6 +58,8 @@ export interface DidQueryGetOrgsResponse {
   Orgs?: DidOrgs;
 }
 
+export type DidQueryOrgDidResponse = object;
+
 /**
  * QueryParamsResponse is response type for the Query/Params RPC method.
  */
@@ -279,6 +281,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryOrgDid
+   * @summary Queries a list of OrgDid items.
+   * @request GET:/cometdid/did/org_did/{orgId}
+   */
+  queryOrgDid = (orgId: string, params: RequestParams = {}) =>
+    this.request<DidQueryOrgDidResponse, RpcStatus>({
+      path: `/cometdid/did/org_did/${orgId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

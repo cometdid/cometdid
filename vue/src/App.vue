@@ -11,10 +11,6 @@ const items = [
     label: "Data",
     to: "/data",
   },
-  {
-    label: "oAuth",
-    to: "/oauth",
-  },
 ];
 </script>
 

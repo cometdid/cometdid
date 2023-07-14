@@ -90,7 +90,7 @@ export class IgniteClient extends EventEmitter {
       const chainName = chainId?.toUpperCase() + " Network";
       const bankqc = bankQueryClient({ addr: this.env.apiURL });
       const tokens = await (await bankqc.queryTotalSupply()).data;
-      const addrPrefix = this.env.prefix ?? "did";
+      const addrPrefix = this.env.prefix ?? "cosmos";
       const rpc = this.env.rpcURL;
       const rest = this.env.apiURL;
 

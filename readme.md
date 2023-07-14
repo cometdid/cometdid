@@ -40,8 +40,14 @@ cometdidd --home ./dist/.did  tx did oauth 1  nickname avator.png --from bob -y
 
 
 cometdidd --home ./dist/.did  query did  valid-did did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
-# 转账给 pi
-cometdidd  --home ./dist/.did   tx bank send  did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0 did140um02k4h2pqjn3saqetz57k2xfxsl95zc5a4z  10000000token
+
+# 生成query 根据orgId查询did
+ignite s query  orgDid orgId:uint --module did
+# query did
+# return : did: did:cometdid:0000000000000001:did13lfkfvslurdzaaflvwnnx6wsxkya4g06kft6q0
+cometdidd --home ./dist/.did  query did  org-did 1
+
+# 
 ```
 
 
@@ -55,8 +61,6 @@ ignite s vue -y
 ignite generate composables
 ignite generate vuex -y
 
-# 运行
-VITE_ADDRESS_PREFIX=did npm run dev
 ```
 
 

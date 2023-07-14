@@ -34,6 +34,12 @@ service Query {
     option (google.api.http).get = "/cometdid/did/valid_did/{did}";
   
   }
+  
+  // Queries a list of OrgDid items.
+  rpc OrgDid (QueryOrgDidRequest) returns (QueryOrgDidResponse) {
+    option (google.api.http).get = "/cometdid/did/org_did/{orgId}";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -67,7 +73,15 @@ message QueryValidDidRequest {
 }
 
 message QueryValidDidResponse {
-  string name = 1;
+  string name   = 1;
   string avatar = 2;
+}
+
+message QueryOrgDidRequest {
+  uint64 orgId = 1;
+}
+
+message QueryOrgDidResponse {
+  string did = 1;
 }
 

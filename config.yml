@@ -2,13 +2,13 @@ version: 1
 accounts:
 - name: alice
   coins:
-  - 200000000000token
+  - 20000token
   - 200000000stake
   mnemonic: buddy alpha peasant tobacco segment ice tired floor forward fresh chef
     vital plunge subway include lava skate bulk during garlic sea nothing garage tribe
 - name: bob
   coins:
-  - 100000000000token
+  - 10000token
   - 100000000stake
   mnemonic: still orbit more fruit smoke describe cute harvest scrub boring fit oven
     visual fun stereo burger parent cheap require valid cloud pudding pair equip
