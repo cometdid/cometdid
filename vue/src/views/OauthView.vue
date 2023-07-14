@@ -8,29 +8,38 @@
             class="mt-1 py-2 px-4 h-12 bg-gray-100 border-xs text-base leading-tight w-full rounded-xl outline-0"
             placeholder="orgid"
         />
+        <br/>
+        <br/>
         <input
             v-model="state.name"
             class="mt-1 py-2 px-4 h-12 bg-gray-100 border-xs text-base leading-tight w-full rounded-xl outline-0"
             placeholder="Name"
         />
+        <br/>
+        <br/>
         <input
             v-model="state.avatar"
             class="mt-1 py-2 px-4 h-12 bg-gray-100 border-xs text-base leading-tight w-full rounded-xl outline-0"
             placeholder="avator"
         />
 
+        <br/>
+        <br/>
         <IgntButton
             style="width: 100%"
             @click="oauth"
         >Oauth
         </IgntButton
         >
+        <br/>
 
+        <br/>
         <div v-if="state.result">
           <div>
             did:<br>
             {{state.result.did}}
           </div>
+          <br/>
           <div>
             nickname:<br>
             {{state.result.name}}
@@ -43,7 +52,7 @@
 
 <script setup lang="ts">
 import {useAddress} from "@/def-composables/useAddress";
-import {onMounted, reactive} from "vue";
+import {onMounted, onUnmounted, reactive} from "vue";
 import {IgntButton} from "@ignt/vue-library";
 import {useClient} from "@/composables/useClient";
 import {} from "@/composables/useCometdidDid/index"
@@ -109,10 +118,15 @@ const query = async ():Promise<void> =>{
       avatar: res.data.avatar,
       did:res.data.did,
     };
+  }).catch(()=>{
+    state.result=null;
   })
 }
-
+let timer = 0;
 onMounted(()=>{
-  setInterval(query,1000)
+  timer = setInterval(query,1000)
+})
+onUnmounted(()=>{
+  clearInterval(timer)
 })
 </script>
