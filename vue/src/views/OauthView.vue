@@ -1,4 +1,4 @@
-<template>
+<template xmlns:src="http://www.w3.org/1999/xhtml">
   <div>
     <div class="container mx-auto">
       <div>
@@ -44,6 +44,11 @@
             nickname:<br>
             {{state.result.name}}
           </div>
+          <br/>
+          <div>
+            avator:<br>
+             {{state.result.avator}}
+          </div>
         </div>
       </div>
     </div>
@@ -72,7 +77,7 @@ interface State {
 const initialState: State = {
   orgID: 1,
   name: "liwu",
-  avatar: "avatar.png",
+  avatar: "/avator.jpg",
 };
 const state = reactive(initialState);
 
