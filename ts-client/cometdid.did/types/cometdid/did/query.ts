@@ -49,6 +49,9 @@ export interface QueryDidRequest {
 }
 
 export interface QueryDidResponse {
+  name: string;
+  avatar: string;
+  did: string;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -512,11 +515,20 @@ export const QueryDidRequest = {
 };
 
 function createBaseQueryDidResponse(): QueryDidResponse {
-  return {};
+  return { name: "", avatar: "", did: "" };
 }
 
 export const QueryDidResponse = {
-  encode(_: QueryDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDidResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.name !== "") {
+      writer.uint32(10).string(message.name);
+    }
+    if (message.avatar !== "") {
+      writer.uint32(18).string(message.avatar);
+    }
+    if (message.did !== "") {
+      writer.uint32(26).string(message.did);
+    }
     return writer;
   },
 
@@ -527,6 +539,15 @@ export const QueryDidResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.name = reader.string();
+          break;
+        case 2:
+          message.avatar = reader.string();
+          break;
+        case 3:
+          message.did = reader.string();
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -535,17 +556,27 @@ export const QueryDidResponse = {
     return message;
   },
 
-  fromJSON(_: any): QueryDidResponse {
-    return {};
+  fromJSON(object: any): QueryDidResponse {
+    return {
+      name: isSet(object.name) ? String(object.name) : "",
+      avatar: isSet(object.avatar) ? String(object.avatar) : "",
+      did: isSet(object.did) ? String(object.did) : "",
+    };
   },
 
-  toJSON(_: QueryDidResponse): unknown {
+  toJSON(message: QueryDidResponse): unknown {
     const obj: any = {};
+    message.name !== undefined && (obj.name = message.name);
+    message.avatar !== undefined && (obj.avatar = message.avatar);
+    message.did !== undefined && (obj.did = message.did);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<QueryDidResponse>, I>>(_: I): QueryDidResponse {
+  fromPartial<I extends Exact<DeepPartial<QueryDidResponse>, I>>(object: I): QueryDidResponse {
     const message = createBaseQueryDidResponse();
+    message.name = object.name ?? "";
+    message.avatar = object.avatar ?? "";
+    message.did = object.did ?? "";
     return message;
   },
 };

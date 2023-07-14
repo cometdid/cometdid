@@ -44,6 +44,14 @@ export default function useCometdidDid() {
     }, options);
   }
   
-  return {QueryParams,QueryOrgs,QueryOrgsAll,QueryValidDid,
+  const QueryDid = (orgId: string, creator: string,  options: any) => {
+    const key = { type: 'QueryDid',  orgId,  creator };    
+    return useQuery([key], () => {
+      const { orgId,  creator } = key
+      return  client.CometdidDid.query.queryDid(orgId, creator).then( res => res.data );
+    }, options);
+  }
+  
+  return {QueryParams,QueryOrgs,QueryOrgsAll,QueryValidDid,QueryDid,
   }
 }

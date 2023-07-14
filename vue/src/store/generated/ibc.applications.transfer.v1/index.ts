@@ -156,7 +156,7 @@ export default {
 			try {
 				const key = params ?? {};
 				const client = initClient(rootGetters);
-				let value= (await client.IbcApplicationsTransferV1.query.queryDenomTrace( key.hash=**)).data
+				let value= (await client.IbcApplicationsTransferV1.query.queryDenomTrace( key.hash/*=***/)).data
 				
 					
 				commit('QUERY', { query: 'DenomTrace', key: { params: {...key}, query}, value })
@@ -226,7 +226,7 @@ export default {
 			try {
 				const key = params ?? {};
 				const client = initClient(rootGetters);
-				let value= (await client.IbcApplicationsTransferV1.query.queryDenomHash( key.trace=**)).data
+				let value= (await client.IbcApplicationsTransferV1.query.queryDenomHash( key.trace/*=***/)).data
 				
 					
 				commit('QUERY', { query: 'DenomHash', key: { params: {...key}, query}, value })
@@ -270,7 +270,7 @@ export default {
 			try {
 				const key = params ?? {};
 				const client = initClient(rootGetters);
-				let value= (await client.IbcApplicationsTransferV1.query.queryTotalEscrowForDenom( key.denom=**)).data
+				let value= (await client.IbcApplicationsTransferV1.query.queryTotalEscrowForDenom( key.denom/*=***/)).data
 				
 					
 				commit('QUERY', { query: 'TotalEscrowForDenom', key: { params: {...key}, query}, value })

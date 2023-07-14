@@ -57,10 +57,12 @@ const state = reactive(initialState);
 
 const oauth = async (): Promise<void> => {
 
-  let msg = {
+  let msg:MsgOauth = {
+    creator: address.value,
     orgId: state.orgID,
     name: state.name,
     avatar: state.avatar,
+    did:"",
   };
 
   const fee: Array<Amount> = [
@@ -72,10 +74,16 @@ const oauth = async (): Promise<void> => {
 
   client.CometdidDid.tx.sendMsgOauth({
     value: msg,
-    fee: {amount: [], gas: "200000"},
-    memo: ""
+    // fee: {amount: [], gas: "200000"},
+    // memo: ""
   }).then((res)=>{
+    debugger;
     console.log(res)
   })
 };
+
+
+const query = async ():Promise<void> =>{
+
+}
 </script>

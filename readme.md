@@ -32,7 +32,7 @@ ignite chain serve  --home ./dist/.did -v -f
 ## 创建组织
 cometdidd --home ./dist/.did tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
 cometdidd --home ./dist/.did tx did create-orgs testorg1 testorg1.png "testorg desc" --from bob -y 
-## 显示列表
+## 显示组织列表
 cometdidd --home ./dist/.did  query did list-orgs
 
 ## 授权生成 did 
@@ -57,8 +57,8 @@ cometdidd  --home ./dist/.did   tx bank send  did13lfkfvslurdzaaflvwnnx6wsxkya4g
 # 生成前端代码
 ignite s vue -y
 # 生成  vue  相关代码
-ignite generate composables
-ignite generate vuex -y
+ignite g composables -y
+ignite g vuex -y
 
 # 运行
 VITE_ADDRESS_PREFIX=did npm run dev

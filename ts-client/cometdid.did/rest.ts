@@ -54,7 +54,11 @@ export interface DidQueryAllOrgsResponse {
   pagination?: V1Beta1PageResponse;
 }
 
-export type DidQueryDidResponse = object;
+export interface DidQueryDidResponse {
+  name?: string;
+  avatar?: string;
+  did?: string;
+}
 
 export interface DidQueryGetOrgsResponse {
   Orgs?: DidOrgs;
