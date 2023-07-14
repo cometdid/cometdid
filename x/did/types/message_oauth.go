@@ -13,8 +13,8 @@ func NewMsgOauth(creator string, orgId uint64, name, avatar string) *MsgOauth {
 	return &MsgOauth{
 		Creator: creator,
 		OrgId:   orgId,
-		Name:    "",
-		Avatar:  "",
+		Name:    name,
+		Avatar:  avatar,
 	}
 }
 
