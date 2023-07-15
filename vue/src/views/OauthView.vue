@@ -77,7 +77,7 @@ interface State {
 
 const initialState: State = {
   orgID: 1,
-  name: "liwu",
+  name: "cosmos3",
   avatar: "/avator.jpg",
 };
 const state = reactive(initialState);

@@ -30,7 +30,7 @@ ignite chain serve  --home ./dist/.did -v
 
 
 ## 创建组织
-cometdidd --home ./dist/.did tx did create-orgs testorg testorg.png "testorg desc" --from bob -y 
+cometdidd --home ./dist/.did tx did create-orgs demo demo.png "demo desc" --from bob -y 
 cometdidd --home ./dist/.did tx did create-orgs testorg1 testorg1.png "testorg desc" --from bob -y 
 ## 显示组织列表
 cometdidd --home ./dist/.did  query did list-orgs
